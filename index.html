@@ -4,26 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>🦊 给开心的奇遇 🐰</title>
-    <link href="https://fonts.googleapis.com/css2?family=ZCOOL+KuaiLe&family=Ma+Shan+Zheng&family=Noto+Serif+SC:wght@400;600&family=Nunito:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=ZCOOL+KuaiLe&family=Ma+Shan+Zheng&family=Noto+Serif+SC:wght@400;600;700&family=Nunito:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            /* --- 梦幻渐变配色体系 --- */
-            
-            /* 尼克色调：柔和的西柚/陶土红 */
+            /* --- 配色升级：增加层次感 --- */
             --nick-tone: #E09F95;
-            /* 朱迪色调：静谧的风信子蓝 */
+            --nick-deep: #c57d73;
             --judy-tone: #8FBFE0;
+            --judy-deep: #6ca0c4;
+            --gold-accent: #ffd700;
             
-            /* 文字颜色 */
             --text-dark: #4A4040;
-            --text-light: #7E7575;
+            --text-light: #8c8282;
             
-            /* 卡片玻璃质感 */
-            --glass-bg: rgba(255, 255, 255, 0.82);
-            --glass-border: rgba(255, 255, 255, 0.6);
-            --glass-shadow: 0 8px 32px rgba(142, 142, 142, 0.1);
+            /* 更通透的玻璃质感 */
+            --glass-bg: rgba(255, 255, 255, 0.75);
+            --glass-border: rgba(255, 255, 255, 0.8);
+            --glass-shadow: 0 12px 40px rgba(255, 154, 158, 0.15);
+            --card-radius: 24px;
 
-            /* 字体 */
             --font-title: 'ZCOOL KuaiLe', cursive;
             --font-hand: 'Ma Shan Zheng', cursive;
             --font-body: 'Noto Serif SC', serif;
@@ -34,16 +33,20 @@
         body {
             font-family: var(--font-body);
             color: var(--text-dark);
-            line-height: 2; /* 更宽松的行高，适合移动端 */
+            line-height: 2.1; /* 增加行高，提升阅读呼吸感 */
             overflow-x: hidden;
             min-height: 100vh;
             cursor: default;
-            
-            /* --- 大胆且柔和的动态渐变背景 --- */
-            /* 使用了粉、紫、蓝的混合，模拟黄昏到夜晚的浪漫过渡 */
-            background: linear-gradient(-45deg, #ff9a9e, #fad0c4, #fad0c4, #a18cd1, #fbc2eb);
+            background: linear-gradient(120deg, #fccb90 0%, #d57eeb 100%);
+            /* 下面这个伪元素用于创建噪点肌理，增加质感 */
+        }
+        
+        /* 动态背景层 */
+        .bg-gradient {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
+            background: linear-gradient(-45deg, #ff9a9e, #fad0c4, #ffd1ff, #a18cd1, #fbc2eb);
             background-size: 400% 400%;
-            animation: gradientMove 15s ease infinite;
+            animation: gradientMove 18s ease infinite;
         }
 
         @keyframes gradientMove {
@@ -52,239 +55,344 @@
             100% { background-position: 0% 50%; }
         }
 
-        /* --- 增强版飘落画布 --- */
         #falling-canvas {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            z-index: -1; pointer-events: none;
+            z-index: 500; pointer-events: none;
         }
 
-        /* --- 柔和水波层 --- */
-        .ripple-layer {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            pointer-events: none; z-index: 9999; overflow: hidden;
-        }
-        
-        .ripple {
-            position: absolute;
-            border-radius: 50%;
-            /* 白色半透明填充，边缘羽化 */
-            background: radial-gradient(circle, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0) 70%);
-            transform: scale(0);
-            opacity: 0.6;
-            animation: rippleSoft 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
-        }
-        @keyframes rippleSoft {
-            to { transform: scale(4); opacity: 0; }
-        }
-
-        /* --- 封面 --- */
+        /* --- 封面 (Cover) 极致优化 --- */
         #cover {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             z-index: 1000;
             display: flex; flex-direction: column; justify-content: center; align-items: center;
-            /* 封面也使用半透明磨砂，透出背后的渐变 */
-            background: rgba(255, 255, 255, 0.3);
-            backdrop-filter: blur(20px);
-            transition: transform 1s cubic-bezier(0.77, 0, 0.175, 1);
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(25px); /* 更强的模糊，营造景深 */
+            transition: transform 1.2s cubic-bezier(0.77, 0, 0.175, 1), opacity 1s ease;
+            overflow: hidden;
         }
-        #cover.hidden { transform: translateY(-100%); }
+        #cover.hidden { transform: translateY(-100%) scale(0.95); opacity: 0; }
 
+        /* 封面背景浮动光球 */
+        .cover-blob {
+            position: absolute; border-radius: 50%; filter: blur(60px); opacity: 0.6;
+            animation: blobFloat 10s infinite alternate; z-index: -1;
+        }
+        .blob-1 { width: 300px; height: 300px; background: #ff9a9e; top: -50px; left: -50px; }
+        .blob-2 { width: 350px; height: 350px; background: #a18cd1; bottom: -50px; right: -50px; animation-delay: -5s; }
+
+        @keyframes blobFloat { 0% { transform: translate(0, 0); } 100% { transform: translate(30px, 50px); } }
+
+        .hero-img-container {
+            position: relative; width: 260px; height: 260px; margin-bottom: 20px;
+        }
+        
         .hero-img {
-            width: 240px; height: 240px;
-            margin-bottom: 30px;
-            filter: drop-shadow(0 15px 25px rgba(0,0,0,0.1));
+            width: 100%; height: 100%;
+            filter: drop-shadow(0 20px 40px rgba(255, 154, 158, 0.4));
             animation: float 6s ease-in-out infinite;
         }
 
+        /* 标题优化：渐变填充 */
         .cover-title {
             font-family: var(--font-title);
-            font-size: 3.2rem; 
-            color: #fff; /* 在彩色背景上用白色文字更清爽 */
-            text-shadow: 0 4px 10px rgba(0,0,0,0.15);
-            margin: 10px 0;
-            letter-spacing: 2px;
+            font-size: 3.5rem; 
+            margin: 15px 0 5px;
+            letter-spacing: 4px;
             text-align: center;
+            background: linear-gradient(45deg, #ff758c, #7a7adb);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 4px 10px rgba(161, 140, 209, 0.2));
         }
         
         .cover-subtitle {
             font-family: var(--font-hand);
-            font-size: 1.4rem; color: rgba(255,255,255,0.9);
-            margin-bottom: 40px; letter-spacing: 2px;
+            font-size: 1.6rem; color: #7E7575;
+            margin-bottom: 50px; letter-spacing: 3px;
+            position: relative;
         }
+        .cover-subtitle::before, .cover-subtitle::after {
+            content: '✨'; font-size: 1rem; position: absolute; top: 50%; transform: translateY(-50%); opacity: 0.6;
+        }
+        .cover-subtitle::before { left: -25px; }
+        .cover-subtitle::after { right: -25px; }
 
+        /* 按钮优化：发光效果 */
         .btn-start {
-            padding: 14px 45px; 
+            padding: 16px 50px; 
             border-radius: 50px; 
-            border: none;
-            background: rgba(255, 255, 255, 0.9);
-            color: var(--nick-tone);
+            border: 2px solid #fff;
+            background: rgba(255, 255, 255, 0.5);
+            color: var(--nick-deep);
             font-size: 1.1rem; 
             font-weight: bold;
-            font-family: var(--font-body); letter-spacing: 2px;
+            font-family: var(--font-body); letter-spacing: 3px;
             cursor: pointer;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 10px 30px rgba(224, 159, 149, 0.25), inset 0 0 20px rgba(255,255,255,0.8);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative; overflow: hidden;
+            text-transform: uppercase;
+        }
+        .btn-start::after {
+            content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.8), transparent);
+            transition: 0.5s;
         }
         .btn-start:hover { 
-            transform: translateY(-2px) scale(1.05); 
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+            transform: translateY(-4px) scale(1.02); 
+            box-shadow: 0 20px 40px rgba(224, 159, 149, 0.35);
+            background: #fff;
+            color: #ff758c;
         }
+        .btn-start:hover::after { left: 100%; }
 
-        /* --- 主内容布局 --- */
+        /* --- 主内容 (Main) --- */
         #main-content {
-            padding: 90px 20px; max-width: 800px; margin: 0 auto;
+            padding: 100px 20px 60px; max-width: 760px; margin: 0 auto;
             opacity: 0; transition: opacity 1.2s ease 0.3s;
+            position: relative; z-index: 10;
         }
 
-        /* 卡片样式优化 */
         .story-card {
             background: var(--glass-bg);
             border: 1px solid var(--glass-border);
-            border-radius: 24px;
-            padding: 35px 30px; /* 移动端内边距适配 */
-            margin-bottom: 60px;
+            border-radius: var(--card-radius);
+            padding: 45px 35px;
+            margin-bottom: 70px;
             box-shadow: var(--glass-shadow);
-            backdrop-filter: blur(15px); /* 磨砂效果 */
+            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
             transform: translateY(40px); opacity: 0; 
             transition: all 0.8s ease;
+            position: relative;
         }
         .story-card.visible { transform: translateY(0); opacity: 1; }
 
-        .chapter-header { text-align: center; margin-bottom: 35px; border-bottom: 2px dashed rgba(0,0,0,0.05); padding-bottom: 20px;}
-        .chapter-num { font-family: 'Nunito'; color: var(--text-light); font-size: 0.9rem; letter-spacing: 3px; text-transform: uppercase; opacity: 0.7;}
-        .chapter-name { font-family: var(--font-title); font-size: 1.8rem; color: var(--text-dark); margin-top: 5px; }
+        /* 章节头装饰 */
+        .chapter-header { text-align: center; margin-bottom: 40px; position: relative; padding-bottom: 25px; }
+        .chapter-header::after {
+            content: ''; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
+            width: 60px; height: 3px; background: linear-gradient(90deg, transparent, var(--nick-tone), transparent);
+            border-radius: 3px;
+        }
+        .chapter-num { font-family: 'Nunito'; color: var(--judy-tone); font-weight: 700; font-size: 0.85rem; letter-spacing: 4px; text-transform: uppercase; margin-bottom: 5px;}
+        .chapter-name { font-family: var(--font-title); font-size: 2rem; color: var(--text-dark); text-shadow: 0 2px 5px rgba(0,0,0,0.05); }
 
-        /* 文字排版：更大、更易读 */
         p { 
-            margin-bottom: 1.6em; 
+            margin-bottom: 1.8em; 
             text-align: justify; 
-            font-size: 1.1rem; /* 字号加大 */
+            font-size: 1.08rem; 
             color: #555; 
+            font-weight: 400;
         }
 
-        /* 对话框：更加圆润可爱 */
         .dialogue {
             background: #fff;
-            padding: 18px 22px; 
-            margin: 25px 0; 
-            border-radius: 18px;
-            border-bottom-left-radius: 2px; /* 像气泡一样 */
+            padding: 20px 25px; 
+            margin: 30px -10px; /* 轻微向外延伸 */
+            border-radius: 20px;
+            border-left: 6px solid var(--judy-tone);
             color: #444; 
             font-size: 1.05rem; font-weight: 600;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+            box-shadow: 0 8px 25px rgba(143, 191, 224, 0.1);
             position: relative;
         }
+        .dialogue::before {
+            content: '“'; position: absolute; top: 10px; left: 10px;
+            font-size: 3rem; line-height: 1; color: var(--judy-tone); opacity: 0.15; font-family: serif;
+        }
 
-        /* 内心独白：手写体加强 */
         .thought {
             font-family: var(--font-hand);
             color: #888; 
-            font-size: 1.25rem; /* 手写体通常偏小，需要放大 */
-            margin: 15px 0 35px 15px; 
-            padding-left: 15px;
-            border-left: 3px solid rgba(224, 159, 149, 0.4);
-            line-height: 1.6;
+            font-size: 1.3rem;
+            margin: 20px 0 40px 10px; 
+            padding-left: 20px;
+            border-left: 2px dashed var(--nick-tone);
+            line-height: 1.7;
         }
 
-        /* 引用语 */
         .quote {
-            text-align: center; color: var(--nick-tone); font-style: italic;
-            margin: 40px 0; font-size: 1rem; opacity: 0.9;
+            text-align: center; color: var(--nick-deep); font-style: italic; font-weight: 600;
+            margin: 50px 0; font-size: 1.1rem; opacity: 0.9;
+            padding: 20px; background: rgba(224, 159, 149, 0.05); border-radius: 12px;
         }
 
-        /* --- 生日贺卡 (精致版) --- */
+        /* --- 生日贺卡 (极致重构) --- */
+        .birthday-section {
+            perspective: 1000px; /* 3D 视角 */
+            margin-top: 80px;
+        }
+        
         .birthday-card {
-            background: linear-gradient(135deg, #fff 0%, #fffbf0 100%);
-            padding: 40px 25px;
-            border-radius: 20px;
-            margin-top: 50px;
-            box-shadow: inset 0 0 0 8px rgba(224, 159, 149, 0.1);
+            background: #fff;
+            background-image: radial-gradient(circle at 10% 20%, rgba(253, 239, 239, 1) 0%, rgba(255, 255, 255, 1) 90%);
+            padding: 50px 30px;
+            border-radius: 24px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.08), 0 0 0 1px rgba(255,255,255,0.8);
             text-align: center;
             position: relative;
             overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
-        .card-deco {
-            position: absolute; width: 100px; height: 100px;
-            background: var(--nick-tone); border-radius: 50%;
-            top: -50px; left: -50px; opacity: 0.1;
+        
+        /* 贺卡流光边框动画 */
+        .birthday-card::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 6px;
+            background: linear-gradient(90deg, var(--nick-tone), var(--gold-accent), var(--judy-tone), var(--nick-tone));
+            background-size: 300% 100%;
+            animation: shimmerBorder 4s linear infinite;
         }
-        .card-deco-2 {
-            position: absolute; width: 80px; height: 80px;
-            background: var(--judy-tone); border-radius: 50%;
-            bottom: -40px; right: -40px; opacity: 0.1;
+        @keyframes shimmerBorder { 0% { background-position: 0% 50%; } 100% { background-position: 100% 50%; } }
+
+        .birthday-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 30px 70px rgba(0,0,0,0.12);
         }
 
-        /* --- 时间轴优化 --- */
-        .timeline { position: relative; padding-left: 20px; margin-top: 40px; }
-        .timeline::before {
-            content: ''; position: absolute; left: 0; top: 10px; bottom: 10px; width: 2px;
-            background: linear-gradient(to bottom, var(--nick-tone), var(--judy-tone));
-            opacity: 0.3; border-radius: 2px;
+        /* 纯CSS蛋糕动画 */
+        .cake-container {
+            width: 100px; height: 100px; margin: 0 auto 20px; position: relative;
         }
-        .time-node { margin-bottom: 35px; opacity: 0; transform: translateY(10px); transition: 0.6s; padding-left: 20px;}
-        .time-node.visible { opacity: 1; transform: translateY(0); }
+        .cake-body {
+            position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
+            width: 80px; height: 50px; background: var(--nick-tone); border-radius: 10px 10px 5px 5px;
+            box-shadow: inset 0 -10px rgba(0,0,0,0.1);
+        }
+        .cake-body::before {
+            content: ''; position: absolute; top: -15px; left: 50%; transform: translateX(-50%);
+            width: 80px; height: 25px; background: #fff5e6; border-radius: 15px;
+            box-shadow: 0 4px 0 #eeddc4; z-index: 2;
+        }
+        .candle {
+            position: absolute; bottom: 50px; left: 50%; transform: translateX(-50%);
+            width: 8px; height: 35px; background: var(--judy-tone); z-index: 1;
+        }
+        .flame {
+            position: absolute; top: -18px; left: 50%; transform: translateX(-50%);
+            width: 12px; height: 18px; background: #FFD700; border-radius: 50% 50% 20% 20%;
+            box-shadow: 0 0 10px #FFD700, 0 0 20px #FF6347;
+            animation: flameFlicker 1s ease-in-out infinite alternate;
+        }
+        @keyframes flameFlicker { 0% { transform: translateX(-50%) scale(1); opacity: 1; } 100% { transform: translateX(-50%) scale(1.1); opacity: 0.8; } }
+
+        .birthday-title {
+            color: var(--nick-deep); 
+            font-family: var(--font-title); 
+            font-size: 2.2rem; 
+            margin: 15px 0;
+            text-shadow: 2px 2px 0px rgba(230, 230, 230, 1);
+        }
+        
+        .birthday-msg {
+            font-family: var(--font-hand); 
+            color: #777; 
+            font-size: 1.3rem; 
+            margin-top: 15px;
+            line-height: 1.6;
+        }
+
+        /* --- 时间轴 (Timeline) 优化 --- */
+        .timeline { position: relative; padding-left: 25px; margin-top: 50px; }
+        .timeline::before {
+            content: ''; position: absolute; left: 6px; top: 10px; bottom: 20px; width: 2px;
+            background: linear-gradient(to bottom, var(--nick-tone) 0%, var(--judy-tone) 100%);
+            opacity: 0.4; border-radius: 2px;
+        }
+        .time-node { margin-bottom: 40px; opacity: 0; transform: translateX(-20px); transition: 0.6s; padding-left: 25px; position: relative;}
+        .time-node.visible { opacity: 1; transform: translateX(0); }
+        
+        .time-node::before {
+            content: ''; position: absolute; left: -1px; top: 6px; width: 16px; height: 16px;
+            border-radius: 50%; background: #fff; border: 3px solid var(--nick-tone);
+            box-shadow: 0 0 0 3px rgba(255,255,255,0.5); z-index: 2;
+            transition: 0.3s;
+        }
+        .time-node:hover::before { background: var(--nick-tone); transform: scale(1.2); }
+
         .time-date {
             font-family: 'Nunito'; font-weight: 700; color: var(--nick-tone); 
-            font-size: 0.9rem; margin-bottom: 5px;
+            font-size: 0.95rem; margin-bottom: 8px; letter-spacing: 1px;
         }
-        .time-content { font-size: 1rem; color: #666; background: rgba(255,255,255,0.5); padding: 10px 15px; border-radius: 8px;}
+        .time-content { 
+            font-size: 1.05rem; color: #555; 
+            background: rgba(255,255,255,0.6); 
+            padding: 15px 20px; 
+            border-radius: 2px 12px 12px 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+            border: 1px solid rgba(255,255,255,0.8);
+        }
 
         /* --- 答题区 --- */
-        #quiz-section { display: none; margin-top: 50px; }
+        #quiz-section { display: none; margin-top: 60px; }
         .quiz-card {
-            background: rgba(255,255,255,0.95); border-radius: 20px; padding: 40px 25px;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.08); text-align: center;
+            background: rgba(255,255,255,0.9); border-radius: 24px; padding: 45px 30px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.1); text-align: center;
+            border: 1px solid rgba(255,255,255,1);
+            backdrop-filter: blur(10px);
         }
         .option-btn {
-            background: #F2F4F8; border: none; padding: 16px; border-radius: 12px;
-            width: 100%; margin-bottom: 12px; color: #555; font-size: 1rem; font-weight: bold;
-            transition: 0.2s; cursor: pointer; font-family: var(--font-body);
+            background: #f7f8fa; border: 1px solid #eee; padding: 18px; border-radius: 14px;
+            width: 100%; margin-bottom: 14px; color: #555; font-size: 1.05rem; font-weight: bold;
+            transition: all 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94); cursor: pointer; 
+            font-family: var(--font-body); position: relative; overflow: hidden;
         }
+        .option-btn:hover { background: #fff; transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0,0,0,0.05); border-color: var(--judy-tone); color: var(--judy-deep); }
         .option-btn:active { transform: scale(0.98); }
-        .option-btn.correct { background: #D4EDDA; color: #155724; }
-        .option-btn.wrong { background: #F8D7DA; color: #721C24; }
+        .option-btn.correct { background: #e0f5e4; color: #155724; border-color: #c3e6cb; }
+        .option-btn.wrong { background: #fce8e6; color: #721C24; border-color: #f5c6cb; }
 
-        /* --- 结尾弹窗 (含蓄) --- */
+        /* --- 结尾弹窗 --- */
         .modal {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(255, 255, 255, 0.4); z-index: 2000;
+            background: rgba(255, 255, 255, 0.1); z-index: 2000;
             display: flex; justify-content: center; align-items: center;
             opacity: 0; pointer-events: none; transition: opacity 0.6s;
-            backdrop-filter: blur(12px);
+            backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
         }
         .modal.show { opacity: 1; pointer-events: all; }
         .modal-inner {
-            background: white; padding: 40px; border-radius: 30px;
-            text-align: center; width: 80%; max-width: 320px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+            background: rgba(255,255,255,0.95); padding: 50px 40px; border-radius: 30px;
+            text-align: center; width: 85%; max-width: 360px;
+            box-shadow: 0 30px 80px rgba(0,0,0,0.15);
+            border: 1px solid #fff;
+            transform: scale(0.9); transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
-        .final-icon { font-size: 3rem; margin-bottom: 15px; animation: float 3s infinite; }
+        .modal.show .modal-inner { transform: scale(1); }
+        .final-icon { font-size: 3.5rem; margin-bottom: 20px; animation: float 3s infinite; display: inline-block; filter: drop-shadow(0 10px 10px rgba(0,0,0,0.1));}
         
         /* 音乐按钮 */
         .music-player {
             position: fixed; top: 20px; right: 20px; z-index: 1001;
-            width: 44px; height: 44px;
-            background: rgba(255,255,255,0.4); border-radius: 50%;
-            border: 1px solid rgba(255,255,255,0.6);
+            width: 48px; height: 48px;
+            background: rgba(255,255,255,0.3); border-radius: 50%;
+            border: 1px solid rgba(255,255,255,0.5);
             display: flex; justify-content: center; align-items: center;
-            backdrop-filter: blur(5px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            backdrop-filter: blur(8px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            transition: all 0.3s; cursor: pointer;
         }
-        .music-player svg { width: 20px; height: 20px; fill: #fff; opacity: 0.9; }
-        .music-player.playing { background: rgba(255,255,255,0.9); }
-        .music-player.playing svg { fill: var(--nick-tone); }
+        .music-player:hover { transform: scale(1.1); background: rgba(255,255,255,0.5); }
+        .music-player svg { width: 22px; height: 22px; fill: #fff; opacity: 1; filter: drop-shadow(0 2px 3px rgba(0,0,0,0.2)); }
+        .music-player.playing { background: rgba(255, 255, 255, 0.9); border-color: #fff; }
+        .music-player.playing svg { fill: var(--nick-tone); filter: none; }
+        .music-player.playing { animation: rotateMusic 4s linear infinite; }
+        @keyframes rotateMusic { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
-        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
 
-        /* 移动端媒体查询微调 */
+        /* 响应式调整 */
         @media (max-width: 400px) {
             .cover-title { font-size: 2.8rem; }
-            .story-card { padding: 30px 20px; }
+            .story-card { padding: 35px 25px; }
             p { font-size: 1.05rem; }
+            .dialogue { margin: 25px 0; }
         }
     </style>
 </head>
 <body>
+    
+    <div class="bg-gradient"></div>
 
     <audio id="bgm" loop preload="auto">
         <source src="LovingYou.mp3" type="audio/mpeg">
@@ -295,26 +403,38 @@
     </div>
 
     <canvas id="falling-canvas"></canvas>
-    <div id="ripple-layer" class="ripple-layer"></div>
+    <div id="ripple-layer" style="position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:9999;"></div>
 
     <div id="cover">
-        <div class="hero-img">
-            <svg viewBox="0 0 200 200" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
-                <defs>
-                    <linearGradient id="gradCover" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%" style="stop-color:#FF9A9E;stop-opacity:1" />
-                        <stop offset="100%" style="stop-color:#FECFEF;stop-opacity:1" />
-                    </linearGradient>
-                </defs>
-                <circle cx="100" cy="100" r="80" fill="url(#gradCover)" opacity="0.8" />
-                <path d="M70,80 Q60,30 80,20 L90,20 Q110,30 100,80" fill="#fff" opacity="0.4" transform="translate(-10, 10)"/>
-                <path d="M110,80 Q120,30 140,20 L150,20 Q170,30 160,80" fill="#fff" opacity="0.4" transform="translate(10, 15)"/>
-                <text x="50%" y="55%" dominant-baseline="middle" text-anchor="middle" font-family="serif" font-size="24" fill="white" opacity="0.9">Journey</text>
-            </svg>
+        <div class="cover-blob blob-1"></div>
+        <div class="cover-blob blob-2"></div>
+
+        <div class="hero-img-container">
+            <div class="hero-img">
+                <svg viewBox="0 0 200 200" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <linearGradient id="gradCover" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#ff9a9e;stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:#fecfef;stop-opacity:1" />
+                        </linearGradient>
+                        <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+                            <feGaussianBlur stdDeviation="5" result="coloredBlur"/>
+                            <feMerge>
+                                <feMergeNode in="coloredBlur"/>
+                                <feMergeNode in="SourceGraphic"/>
+                            </feMerge>
+                        </filter>
+                    </defs>
+                    <circle cx="100" cy="100" r="85" fill="url(#gradCover)" opacity="0.9" filter="url(#glow)"/>
+                    <path d="M70,80 Q60,30 80,20 L90,20 Q110,30 100,80" fill="#fff" opacity="0.6" transform="translate(-10, 10)"/>
+                    <path d="M110,80 Q120,30 140,20 L150,20 Q170,30 160,80" fill="#fff" opacity="0.6" transform="translate(10, 15)"/>
+                    <text x="50%" y="55%" dominant-baseline="middle" text-anchor="middle" font-family="'Noto Serif SC', serif" font-weight="bold" font-size="28" fill="white" style="text-shadow: 0 2px 4px rgba(0,0,0,0.1);">Journey</text>
+                </svg>
+            </div>
         </div>
         <div class="cover-title">给开心的奇遇</div>
-        <div class="cover-subtitle">—— Happy Birthday ——</div>
-        <button class="btn-start" onclick="startJourney()">Open Letter</button>
+        <div class="cover-subtitle">Happy Birthday</div>
+        <button class="btn-start" onclick="startJourney()">Open</button>
     </div>
 
     <div id="main-content">
@@ -353,7 +473,7 @@
             <div class="thought">……这就和开心单独待在一起了？？根本没准备好啊喂，想拒绝！</div>
             <div class="dialogue">“那我告诉开心说你不去啦。”</div>
             <div class="thought">……可恶啊，别、别、别、别、别、别、别、别</div>
-            <p style="text-align: center; color: var(--nick-tone); margin-top: 40px; font-weight: bold;">我怀疑，这奇遇，就是个恶作剧！</p>
+            <p style="text-align: center; color: var(--nick-tone); margin-top: 40px; font-weight: bold; font-size: 1.2rem;">我怀疑，这奇遇，就是个恶作剧！</p>
         </div>
 
         <div class="story-card">
@@ -367,7 +487,7 @@
             <div class="thought">……全身微湿</div>
             <div class="dialogue">“还是不要骑回学校了吧，还是晚高峰，开心坐后面还得打伞啥的，很危险，直接把车停她公司楼下，有机会再接她出来，嘿嘿，试图接近她了解她的小借口有啦”</div>
             
-            <h3 style="text-align: center; color: var(--judy-tone); margin: 30px 0; font-family: var(--font-title); font-weight: normal;">✨ 小狐狸满眼都是开心！</h3>
+            <h3 style="text-align: center; color: var(--judy-tone); margin: 40px 0 30px; font-family: var(--font-title); font-weight: normal; font-size: 1.4rem;">✨ 小狐狸满眼都是开心！</h3>
             
             <div class="thought">……她不喜欢吃香菜、不爱吃海鲜...但是她好厉害，竟然喜欢坐欢乐谷最大的过山车，还有跳楼机！</div>
             <div class="thought">……她吃烤肉喜欢用青菜包住烤肉，小狐狸从不吃青菜，尝试了一下后竟然感觉像是找到了新大陆</div>
@@ -425,81 +545,95 @@
             <div class="timeline">
                 <div class="time-node">
                     <div class="time-date">11月23日</div>
-                    <div class="time-content">给你准备疯狂动物城主题的礼物。要是能一起看就更好了。</div>
+                    <div class="time-content">给她准备一个疯狂动物城主题的礼物吧。
+                        要是她能陪小狐狸一起看疯狂动物城就好了，那这个生日礼物的分量说不定就更重了
+                        </div>
                 </div>
                 
                 <div class="time-node">
                     <div class="time-date">11月24日</div>
-                    <div class="time-content">听错了你喜欢的明星，误选了《LovingYou》。开始苦练这首曲子。</div>
+                    <div class="time-content">（开心说过看赵丽颖的剧比较多，小狐狸小时候的唯一女神嘞，果然是世界上另一个我。）不过小狐狸听成了“张靓颖”，
+                        心想张靓颖不是歌星吗，没多问。小狐狸刚好找到了一个张靓颖和IU都翻唱过的曲子《LovingYou》也正是背景音乐哦，决心开始每天学习这首曲子，作为开心的生日礼物。</div>
                 </div>
 
                 <div class="time-node">
                     <div class="time-date">11月25日</div>
-                    <div class="time-content">手全是水泡，曲子好难。</div>
+                    <div class="time-content">曲子好难啊，弹了三四个小时，手上全是水泡，可是还是第一段部分都弹不顺。</div>
                 </div>
 
                 <div class="time-node">
                     <div class="time-date">11月26日</div>
-                    <div class="time-content">大横按使不上劲。不能放弃，没有曲子就没有独一无二的礼物。</div>
+                    <div class="time-content">昨天的大横按给手练废了，使不上劲。好想放弃啊！不过不能放弃，没有曲子怎么送给开心独一无二的礼物？</div>
                 </div>
 
                 <div class="time-node">
                     <div class="time-date">11月27日</div>
-                    <div class="time-content">渐入佳境，不能弹顺的部分竟然能弹了！</div>
+                    <div class="time-content">手指机能恢复了。渐入佳境，不能弹顺的部分竟然能弹了！
+                    </div>
                 </div>
 
                 <div class="time-node">
                     <div class="time-date">11月28日</div>
-                    <div class="time-content">日常练琴，时间好紧迫啊。</div>
+                    <div class="time-content">日常练琴，感觉这首曲子能练好不是一朝一夕的事啊，时间好紧迫啊
+                    </div>
                 </div>
 
                 <div class="time-node">
                     <div class="time-date">11月29日</div>
-                    <div class="time-content">今天周六，想叫你出去玩...蒜鸟，躺尸吧！</div>
+                    <div class="time-content">今天周六，怎么没人叫我出去玩啊！有点想叫开心出去玩，但是不知道玩什么，会不会她有安排了，好难处理呀！蒜鸟，躺尸吧！</div>
                 </div>
 
                 <div class="time-node">
                     <div class="time-date">11月30日</div>
-                    <div class="time-content">好久没见，你隔了那么远跟我招手，可到身边了却不敢看我...</div>
+                    <div class="time-content">没想到今天还能一起出来玩，好久没见到开心了。
+                        明明隔了那么远就看到我了跟我招手，可是我到身边了却都不敢多看我，和火两个人说话也不带上我（虽然我也一样）。</div>
                 </div>
 
                 <div class="time-node">
                     <div class="time-date">12月1日</div>
-                    <div class="time-content">想到了新点子！给你一个计算机专业朋友独有的礼物！</div>
+                    <div class="time-content">想到了有趣的点子。我是计算机专业的呀，可以给开心一个计算机专业朋友独有的礼物！干劲倍增！
+                    </div>
                 </div>
 
                 <div class="time-node">
                     <div class="time-date">12月2日</div>
-                    <div class="time-content">拼豆完成了。发誓只做这一次手工！</div>
+                    <div class="time-content">朱迪和尼克的拼豆也完成了，这种手工活怎么像是小女生才干的事，淦，发誓只做这一次！</div>
                 </div>
 
                 <div class="time-node">
                     <div class="time-date">12月3日</div>
-                    <div class="time-content">今天阳光真好，礼物准备得差不多了。</div>
+                    <div class="time-content">今天阳光真好，礼物的事也准备的差不多了，comfortable!!
+                        到处逛逛吧，好多人在学校新修的小坡上晒太阳呀，分享给开心！</div>
                 </div>
 
                 <div class="time-node">
                     <div class="time-date">12月4日</div>
-                    <div class="time-content">喉咙好痛，代码还没写完。有点紧迫了。</div>
+                    <div class="time-content">流感又来了？？喉咙好痛，可是代码还没有写完呀。有点紧迫了。
+                    </div>
                 </div>
 
                 <div class="time-node">
                     <div class="time-date">12月5日</div>
-                    <div class="time-content">芯片到货，程序录入成功！！</div>
+                    <div class="time-content">芯片到货，程序录入成功！生日礼物准备好啦！希望开心能喜欢！</div>
                 </div>
             </div>
 
-            <div class="birthday-card">
-                <div class="card-deco"></div>
-                <div class="card-deco-2"></div>
-                <h3 style="color: var(--nick-tone); font-family: var(--font-title); font-size: 2rem;">🎂 生日快乐呀！</h3>
-                <p style="margin-top: 20px; font-weight: bold; color: #555;">希望你读到这里哭鼻子啦！想看！<br>如果是笑着的那当然更好啦！</p>
-                <p style="font-family: var(--font-hand); color: #888; font-size: 1.2rem; margin-top: 15px;">2025年的生日能有这样一份特别的礼物，<br>你会记得多久呢？</p>
+            <div class="birthday-section">
+                <div class="birthday-card">
+                    <div class="cake-container">
+                        <div class="cake-body"></div>
+                        <div class="candle">
+                            <div class="flame"></div>
+                        </div>
+                    </div>
+                    <h3 class="birthday-title">🎂 生日快乐呀！</h3>
+                    <p class="birthday-msg">新的一年要开开心心的呀！<br>认识小狐狸，有没有给你带来新的体验呢？</p>
+                </div>
             </div>
         </div>
 
         <div style="text-align: center; margin-bottom: 50px;">
-            <button class="btn-start" style="font-size: 1rem; padding: 12px 30px; background: rgba(255,255,255,0.7);" id="startQuizBtn" onclick="startQuiz()">还有几个小问题</button>
+            <button class="btn-start" style="font-size: 1rem; padding: 14px 35px; background: rgba(255,255,255,0.7); border:1px solid #fff;" id="startQuizBtn" onclick="startQuiz()">挑战几个小问题？</button>
         </div>
 
         <div id="quiz-section"></div>
@@ -511,9 +645,9 @@
     <div id="final-modal" class="modal">
         <div class="modal-inner">
             <div class="final-icon">🍃</div>
-            <h2 style="color: var(--nick-tone); font-family: var(--font-title); font-size: 2rem; margin-bottom: 15px;">Me Too</h2>
-            <p style="color: #999; font-family: var(--font-hand); font-size: 1.2rem;">（小狐狸的心声）</p>
-            <button class="btn-start" style="margin-top: 30px; padding: 10px 30px; font-size: 0.9rem;" onclick="document.getElementById('final-modal').classList.remove('show')">收到心意</button>
+            <h2 style="color: var(--nick-deep); font-family: var(--font-title); font-size: 2.2rem; margin-bottom: 15px;">Me Too</h2>
+            <p style="color: #999; font-family: var(--font-hand); font-size: 1.3rem;">（小狐狸的心声）</p>
+            <button class="btn-start" style="margin-top: 35px; padding: 12px 35px; font-size: 0.95rem; box-shadow: 0 5px 20px rgba(0,0,0,0.1);" onclick="document.getElementById('final-modal').classList.remove('show')">收到心意</button>
         </div>
     </div>
 
@@ -545,7 +679,7 @@
                 this.speedY = Math.random() * 1 + 0.3; 
                 this.speedX = Math.random() * 0.5 - 0.25;
                 // 透明度与闪烁
-                this.opacity = Math.random() * 0.5 + 0.1;
+                this.opacity = Math.random() * 0.4 + 0.1;
                 this.fadeSpeed = Math.random() * 0.01 + 0.002;
                 // 颜色：白色或淡金
                 this.color = Math.random() > 0.8 ? '255, 230, 150' : '255, 255, 255'; 
@@ -553,22 +687,16 @@
             update() {
                 this.y += this.speedY;
                 this.x += this.speedX + Math.sin(this.y * 0.01) * 0.3; // 增加摆动感
-                
-                // 模拟闪烁
                 this.opacity += Math.sin(Date.now() * 0.005) * 0.005;
-                
                 if (this.y > height + 20) this.reset();
             }
             draw() {
                 ctx.beginPath();
                 ctx.globalAlpha = Math.max(0, Math.min(1, this.opacity));
                 ctx.fillStyle = `rgb(${this.color})`;
-                // 绘制圆形
                 ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
                 ctx.fill();
-                
-                // 给部分粒子加一点光晕
-                if(this.size > 5) {
+                if(this.size > 5) { // 光晕
                     ctx.beginPath();
                     ctx.globalAlpha = this.opacity * 0.3;
                     ctx.arc(this.x, this.y, this.size * 2, 0, Math.PI * 2);
@@ -579,10 +707,7 @@
 
         function initParticles() {
             particles = [];
-            // 粒子数量
-            for (let i = 0; i < 45; i++) {
-                particles.push(new Particle());
-            }
+            for (let i = 0; i < 45; i++) { particles.push(new Particle()); }
         }
         function animateParticles() {
             ctx.clearRect(0, 0, width, height);
@@ -592,23 +717,32 @@
         initParticles();
         animateParticles();
 
-
-        // --- 2. 交互逻辑 (保持不变) ---
+        // --- 2. 交互逻辑 ---
         const rippleLayer = document.getElementById('ripple-layer');
         function createRipple(x, y) {
             const ripple = document.createElement('div');
-            ripple.classList.add('ripple');
+            // 简单的JS内联样式创建波纹，避免外部CSS依赖冲突
+            ripple.style.position = 'absolute';
+            ripple.style.borderRadius = '50%';
+            ripple.style.background = 'radial-gradient(circle, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0) 70%)';
+            ripple.style.transform = 'scale(0)';
+            ripple.style.opacity = '0.6';
             ripple.style.left = x - 10 + 'px';
             ripple.style.top = y - 10 + 'px';
+            ripple.style.width = '20px';
+            ripple.style.height = '20px';
+            ripple.style.pointerEvents = 'none';
+            // 使用Web Animations API或简单的Transition
+            ripple.animate([
+                { transform: 'scale(0)', opacity: 0.6 },
+                { transform: 'scale(4)', opacity: 0 }
+            ], { duration: 1200, easing: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)' });
+            
             rippleLayer.appendChild(ripple);
-            setTimeout(() => ripple.remove(), 1300);
+            setTimeout(() => ripple.remove(), 1200);
         }
         document.addEventListener('click', (e) => createRipple(e.clientX, e.clientY));
-        document.addEventListener('touchstart', (e) => {
-            const t = e.touches[0];
-            createRipple(t.clientX, t.clientY);
-        }, {passive: true});
-
+        
         const bgm = document.getElementById('bgm');
         const musicBtn = document.getElementById('musicBtn');
         let isPlaying = false;
@@ -657,15 +791,26 @@
             const data = questions[qIndex];
             const card = document.createElement('div');
             card.className = 'quiz-card';
-            let html = `<div style="font-size:1.1rem;margin-bottom:20px;color:#555;font-weight:bold;">${data.q}</div>`;
+            // 添加淡入动画
+            card.style.animation = "fadeIn 0.5s ease";
+            
+            let html = `<div style="font-size:1.15rem;margin-bottom:25px;color:#555;font-weight:bold;">${data.q}</div>`;
             if(data.type === 'final') {
-                html += `<button class="option-btn" style="background:linear-gradient(90deg, #ff9a9e, #fad0c4);color:white;" onclick="showFinal()">🎁 ${data.opts[0]}</button>`;
+                html += `<button class="option-btn" style="background:linear-gradient(90deg, #ff9a9e, #fad0c4);color:white;border:none;box-shadow:0 4px 15px rgba(255,154,158,0.3);" onclick="showFinal()">🎁 ${data.opts[0]}</button>`;
             } else {
                 data.opts.forEach(opt => { html += `<button class="option-btn" onclick="check(this,'${opt}','${data.ans}')">${opt}</button>`; });
             }
             card.innerHTML = html;
             section.innerHTML = '';
             section.appendChild(card);
+            
+            // 动态添加keyframes
+            if(!document.getElementById('animStyles')) {
+                const s = document.createElement('style');
+                s.id = 'animStyles';
+                s.innerHTML = `@keyframes fadeIn { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } }`;
+                document.head.appendChild(s);
+            }
         }
         function check(btn, val, ans) {
             const allBtns = btn.parentElement.querySelectorAll('button');
