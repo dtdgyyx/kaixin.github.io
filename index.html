@@ -2,317 +2,683 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>疯狂动物城 - 我的个人主页</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>🦊 给开心的奇遇 🐰</title>
+    <link href="https://fonts.googleapis.com/css2?family=ZCOOL+KuaiLe&family=Ma+Shan+Zheng&family=Noto+Serif+SC:wght@400;600&family=Nunito:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        body {
-            font-family: 'Arial Rounded MT Bold', 'Arial', sans-serif;
-            max-width: 800px;
-            margin: 50px auto;
-            padding: 20px;
-            background: linear-gradient(135deg, #87CEEB 0%, #98FB98 100%);
-            background-attachment: fixed;
-            position: relative;
-            overflow-x: hidden;
-        }
-        .container {
-            background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
-            padding: 40px;
-            border-radius: 20px;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
-            border: 5px solid #8B4513;
-            position: relative;
-            overflow: hidden;
-            z-index: 10;
-        }
-        .container::before {
-            content: "";
-            position: absolute;
-            top: -20px;
-            right: -20px;
-            width: 120px;
-            height: 120px;
-            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="%23FF6347"/><circle cx="35" cy="40" r="5" fill="white"/><circle cx="65" cy="40" r="5" fill="white"/><path d="M 30 65 Q 50 80 70 65" stroke="white" stroke-width="3" fill="none"/></svg>') no-repeat;
-            background-size: contain;
-            transform: rotate(15deg);
-        }
-        h1 { 
-            color: #8B0000; 
-            text-align: center; 
-            font-size: 2.5em;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-            letter-spacing: 2px;
-        }
-        p { 
-            line-height: 1.8; 
-            color: #000080; 
-            font-size: 1.2em;
-            text-align: center;
-        }
-        .badge {
-            display: inline-block;
-            background: #DC143C;
-            color: white;
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-weight: bold;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-        }
-        .zootopia-quote {
-            font-style: italic;
-            text-align: center;
-            margin: 20px 0;
-            padding: 15px;
-            background: rgba(255,255,255,0.7);
-            border-left: 5px solid #8B0000;
-            border-radius: 5px;
-        }
-        .character-list {
-            display: flex;
-            justify-content: space-around;
-            margin: 30px 0;
-            flex-wrap: wrap;
-        }
-        .character {
-            background: rgba(255,255,255,0.8);
-            padding: 15px;
-            border-radius: 15px;
-            text-align: center;
-            width: 120px;
-            margin: 10px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            transition: transform 0.3s;
-        }
-        .character:hover {
-            transform: scale(1.1);
-        }
-        .character-icon {
-            font-size: 2em;
-            margin-bottom: 10px;
-        }
-        a {
-            color: #00008B;
-            text-decoration: none;
-            font-weight: bold;
-        }
-        a:hover {
-            text-decoration: underline;
-        }
-        
-        /* 飘落元素样式 */
-        .falling-element {
-            position: fixed;
-            top: -50px;
-            z-index: 1;
-            pointer-events: none;
-            animation-name: falling;
-            animation-timing-function: linear;
-            animation-iteration-count: infinite;
-        }
-        
-        @keyframes falling {
-            to {
-                transform: translateY(105vh) rotate(360deg);
-            }
-        }
-        
-        /* 音频控件样式 */
-        .audio-controls {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            z-index: 100;
-            background: rgba(255, 255, 255, 0.9);
-            padding: 12px 20px;
-            border-radius: 30px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-            backdrop-filter: blur(5px);
-            border: 1px solid rgba(255,255,255,0.5);
-        }
-        
-        .audio-controls button {
-            background: transparent;
-            border: none;
-            font-size: 18px;
-            cursor: pointer;
-            outline: none;
-            color: #8B0000;
-            font-weight: bold;
+        :root {
+            /* --- 梦幻渐变配色体系 --- */
+            
+            /* 尼克色调：柔和的西柚/陶土红 */
+            --nick-tone: #E09F95;
+            /* 朱迪色调：静谧的风信子蓝 */
+            --judy-tone: #8FBFE0;
+            
+            /* 文字颜色 */
+            --text-dark: #4A4040;
+            --text-light: #7E7575;
+            
+            /* 卡片玻璃质感 */
+            --glass-bg: rgba(255, 255, 255, 0.82);
+            --glass-border: rgba(255, 255, 255, 0.6);
+            --glass-shadow: 0 8px 32px rgba(142, 142, 142, 0.1);
+
+            /* 字体 */
+            --font-title: 'ZCOOL KuaiLe', cursive;
+            --font-hand: 'Ma Shan Zheng', cursive;
+            --font-body: 'Noto Serif SC', serif;
         }
 
-        /* 移动端优化 */
-        @media (max-width: 768px) {
-            body {
-                margin: 20px auto;
-                padding: 10px;
-            }
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; outline: none; }
+        
+        body {
+            font-family: var(--font-body);
+            color: var(--text-dark);
+            line-height: 2; /* 更宽松的行高，适合移动端 */
+            overflow-x: hidden;
+            min-height: 100vh;
+            cursor: default;
             
-            .container {
-                padding: 20px;
-                border-radius: 15px;
-                border-width: 3px;
-            }
-            
-            h1 {
-                font-size: 2em;
-            }
-            
-            p {
-                font-size: 1em;
-            }
-            
-            .character-list {
-                flex-direction: column;
-                align-items: center;
-            }
-            
-            .character {
-                width: 80%;
-                margin: 10px 0;
-            }
-            
-            .audio-controls {
-                bottom: 10px;
-                right: 10px;
-                padding: 8px 15px;
-            }
+            /* --- 大胆且柔和的动态渐变背景 --- */
+            /* 使用了粉、紫、蓝的混合，模拟黄昏到夜晚的浪漫过渡 */
+            background: linear-gradient(-45deg, #ff9a9e, #fad0c4, #fad0c4, #a18cd1, #fbc2eb);
+            background-size: 400% 400%;
+            animation: gradientMove 15s ease infinite;
+        }
+
+        @keyframes gradientMove {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* --- 增强版飘落画布 --- */
+        #falling-canvas {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1; pointer-events: none;
+        }
+
+        /* --- 柔和水波层 --- */
+        .ripple-layer {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none; z-index: 9999; overflow: hidden;
         }
         
-        @media (max-width: 480px) {
-            h1 {
-                font-size: 1.5em;
-            }
-            
-            p {
-                font-size: 0.9em;
-            }
-            
-            .badge {
-                padding: 3px 10px;
-                font-size: 0.9em;
-            }
+        .ripple {
+            position: absolute;
+            border-radius: 50%;
+            /* 白色半透明填充，边缘羽化 */
+            background: radial-gradient(circle, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0) 70%);
+            transform: scale(0);
+            opacity: 0.6;
+            animation: rippleSoft 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+        }
+        @keyframes rippleSoft {
+            to { transform: scale(4); opacity: 0; }
+        }
+
+        /* --- 封面 --- */
+        #cover {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 1000;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            /* 封面也使用半透明磨砂，透出背后的渐变 */
+            background: rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(20px);
+            transition: transform 1s cubic-bezier(0.77, 0, 0.175, 1);
+        }
+        #cover.hidden { transform: translateY(-100%); }
+
+        .hero-img {
+            width: 240px; height: 240px;
+            margin-bottom: 30px;
+            filter: drop-shadow(0 15px 25px rgba(0,0,0,0.1));
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .cover-title {
+            font-family: var(--font-title);
+            font-size: 3.2rem; 
+            color: #fff; /* 在彩色背景上用白色文字更清爽 */
+            text-shadow: 0 4px 10px rgba(0,0,0,0.15);
+            margin: 10px 0;
+            letter-spacing: 2px;
+            text-align: center;
+        }
+        
+        .cover-subtitle {
+            font-family: var(--font-hand);
+            font-size: 1.4rem; color: rgba(255,255,255,0.9);
+            margin-bottom: 40px; letter-spacing: 2px;
+        }
+
+        .btn-start {
+            padding: 14px 45px; 
+            border-radius: 50px; 
+            border: none;
+            background: rgba(255, 255, 255, 0.9);
+            color: var(--nick-tone);
+            font-size: 1.1rem; 
+            font-weight: bold;
+            font-family: var(--font-body); letter-spacing: 2px;
+            cursor: pointer;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        .btn-start:hover { 
+            transform: translateY(-2px) scale(1.05); 
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+        }
+
+        /* --- 主内容布局 --- */
+        #main-content {
+            padding: 90px 20px; max-width: 800px; margin: 0 auto;
+            opacity: 0; transition: opacity 1.2s ease 0.3s;
+        }
+
+        /* 卡片样式优化 */
+        .story-card {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 35px 30px; /* 移动端内边距适配 */
+            margin-bottom: 60px;
+            box-shadow: var(--glass-shadow);
+            backdrop-filter: blur(15px); /* 磨砂效果 */
+            transform: translateY(40px); opacity: 0; 
+            transition: all 0.8s ease;
+        }
+        .story-card.visible { transform: translateY(0); opacity: 1; }
+
+        .chapter-header { text-align: center; margin-bottom: 35px; border-bottom: 2px dashed rgba(0,0,0,0.05); padding-bottom: 20px;}
+        .chapter-num { font-family: 'Nunito'; color: var(--text-light); font-size: 0.9rem; letter-spacing: 3px; text-transform: uppercase; opacity: 0.7;}
+        .chapter-name { font-family: var(--font-title); font-size: 1.8rem; color: var(--text-dark); margin-top: 5px; }
+
+        /* 文字排版：更大、更易读 */
+        p { 
+            margin-bottom: 1.6em; 
+            text-align: justify; 
+            font-size: 1.1rem; /* 字号加大 */
+            color: #555; 
+        }
+
+        /* 对话框：更加圆润可爱 */
+        .dialogue {
+            background: #fff;
+            padding: 18px 22px; 
+            margin: 25px 0; 
+            border-radius: 18px;
+            border-bottom-left-radius: 2px; /* 像气泡一样 */
+            color: #444; 
+            font-size: 1.05rem; font-weight: 600;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+            position: relative;
+        }
+
+        /* 内心独白：手写体加强 */
+        .thought {
+            font-family: var(--font-hand);
+            color: #888; 
+            font-size: 1.25rem; /* 手写体通常偏小，需要放大 */
+            margin: 15px 0 35px 15px; 
+            padding-left: 15px;
+            border-left: 3px solid rgba(224, 159, 149, 0.4);
+            line-height: 1.6;
+        }
+
+        /* 引用语 */
+        .quote {
+            text-align: center; color: var(--nick-tone); font-style: italic;
+            margin: 40px 0; font-size: 1rem; opacity: 0.9;
+        }
+
+        /* --- 生日贺卡 (精致版) --- */
+        .birthday-card {
+            background: linear-gradient(135deg, #fff 0%, #fffbf0 100%);
+            padding: 40px 25px;
+            border-radius: 20px;
+            margin-top: 50px;
+            box-shadow: inset 0 0 0 8px rgba(224, 159, 149, 0.1);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .card-deco {
+            position: absolute; width: 100px; height: 100px;
+            background: var(--nick-tone); border-radius: 50%;
+            top: -50px; left: -50px; opacity: 0.1;
+        }
+        .card-deco-2 {
+            position: absolute; width: 80px; height: 80px;
+            background: var(--judy-tone); border-radius: 50%;
+            bottom: -40px; right: -40px; opacity: 0.1;
+        }
+
+        /* --- 时间轴优化 --- */
+        .timeline { position: relative; padding-left: 20px; margin-top: 40px; }
+        .timeline::before {
+            content: ''; position: absolute; left: 0; top: 10px; bottom: 10px; width: 2px;
+            background: linear-gradient(to bottom, var(--nick-tone), var(--judy-tone));
+            opacity: 0.3; border-radius: 2px;
+        }
+        .time-node { margin-bottom: 35px; opacity: 0; transform: translateY(10px); transition: 0.6s; padding-left: 20px;}
+        .time-node.visible { opacity: 1; transform: translateY(0); }
+        .time-date {
+            font-family: 'Nunito'; font-weight: 700; color: var(--nick-tone); 
+            font-size: 0.9rem; margin-bottom: 5px;
+        }
+        .time-content { font-size: 1rem; color: #666; background: rgba(255,255,255,0.5); padding: 10px 15px; border-radius: 8px;}
+
+        /* --- 答题区 --- */
+        #quiz-section { display: none; margin-top: 50px; }
+        .quiz-card {
+            background: rgba(255,255,255,0.95); border-radius: 20px; padding: 40px 25px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.08); text-align: center;
+        }
+        .option-btn {
+            background: #F2F4F8; border: none; padding: 16px; border-radius: 12px;
+            width: 100%; margin-bottom: 12px; color: #555; font-size: 1rem; font-weight: bold;
+            transition: 0.2s; cursor: pointer; font-family: var(--font-body);
+        }
+        .option-btn:active { transform: scale(0.98); }
+        .option-btn.correct { background: #D4EDDA; color: #155724; }
+        .option-btn.wrong { background: #F8D7DA; color: #721C24; }
+
+        /* --- 结尾弹窗 (含蓄) --- */
+        .modal {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(255, 255, 255, 0.4); z-index: 2000;
+            display: flex; justify-content: center; align-items: center;
+            opacity: 0; pointer-events: none; transition: opacity 0.6s;
+            backdrop-filter: blur(12px);
+        }
+        .modal.show { opacity: 1; pointer-events: all; }
+        .modal-inner {
+            background: white; padding: 40px; border-radius: 30px;
+            text-align: center; width: 80%; max-width: 320px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+        }
+        .final-icon { font-size: 3rem; margin-bottom: 15px; animation: float 3s infinite; }
+        
+        /* 音乐按钮 */
+        .music-player {
+            position: fixed; top: 20px; right: 20px; z-index: 1001;
+            width: 44px; height: 44px;
+            background: rgba(255,255,255,0.4); border-radius: 50%;
+            border: 1px solid rgba(255,255,255,0.6);
+            display: flex; justify-content: center; align-items: center;
+            backdrop-filter: blur(5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        .music-player svg { width: 20px; height: 20px; fill: #fff; opacity: 0.9; }
+        .music-player.playing { background: rgba(255,255,255,0.9); }
+        .music-player.playing svg { fill: var(--nick-tone); }
+
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+
+        /* 移动端媒体查询微调 */
+        @media (max-width: 400px) {
+            .cover-title { font-size: 2.8rem; }
+            .story-card { padding: 30px 20px; }
+            p { font-size: 1.05rem; }
         }
     </style>
 </head>
 <body>
-    <!-- 音频元素 -->
-    <audio id="background-music" loop>
+
+    <audio id="bgm" loop preload="auto">
         <source src="LovingYou.mp3" type="audio/mpeg">
-        您的浏览器不支持音频元素。
     </audio>
-    
-    <!-- 音频控制按钮 -->
-    <div class="audio-controls">
-        <button id="music-toggle" onclick="toggleMusic()">🔊 音乐开关</button>
+
+    <div class="music-player" id="musicBtn" onclick="toggleMusic()">
+        <svg viewBox="0 0 24 24"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
     </div>
-    
-    <!-- 动态飘落元素容器 -->
-    <div id="falling-elements"></div>
-    
-    <div class="container">
-        <h1>🐾 欢迎来到动物城 🐾</h1>
-        <div class="zootopia-quote">
-            "在动物城中，任何人都能成功，只要努力不懈！"<br>
-            —— 兔子警官朱迪
+
+    <canvas id="falling-canvas"></canvas>
+    <div id="ripple-layer" class="ripple-layer"></div>
+
+    <div id="cover">
+        <div class="hero-img">
+            <svg viewBox="0 0 200 200" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <linearGradient id="gradCover" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" style="stop-color:#FF9A9E;stop-opacity:1" />
+                        <stop offset="100%" style="stop-color:#FECFEF;stop-opacity:1" />
+                    </linearGradient>
+                </defs>
+                <circle cx="100" cy="100" r="80" fill="url(#gradCover)" opacity="0.8" />
+                <path d="M70,80 Q60,30 80,20 L90,20 Q110,30 100,80" fill="#fff" opacity="0.4" transform="translate(-10, 10)"/>
+                <path d="M110,80 Q120,30 140,20 L150,20 Q170,30 160,80" fill="#fff" opacity="0.4" transform="translate(10, 15)"/>
+                <text x="50%" y="55%" dominant-baseline="middle" text-anchor="middle" font-family="serif" font-size="24" fill="white" opacity="0.9">Journey</text>
+            </svg>
         </div>
-        <p>这是用 GitHub Pages 搭建的个人主页。</p>
-        <p>网站地址：<a href="https://你的用户名.github.io">https://你的用户名.github.io</a></p>
-        
-        <div class="character-list">
-            <div class="character">
-                <div class="character-icon">🐰</div>
-                <div>朱迪·霍普斯</div>
-            </div>
-            <div class="character">
-                <div class="character-icon">🦊</div>
-                <div>尼克·王尔德</div>
-            </div>
-            <div class="character">
-                <div class="character-icon">🐼</div>
-                <div>牛局长</div>
-            </div>
-        </div>
-        
-        <p><span class="badge">Zootopia Citizen</span></p>
+        <div class="cover-title">给开心的奇遇</div>
+        <div class="cover-subtitle">—— Happy Birthday ——</div>
+        <button class="btn-start" onclick="startJourney()">Open Letter</button>
     </div>
-    
+
+    <div id="main-content">
+        
+        <div class="story-card">
+            <div class="chapter-header">
+                <div class="chapter-num">Chapter 01</div>
+                <div class="chapter-name">恶作剧篇</div>
+            </div>
+            
+            <p>十月的某一天，小狐狸平静的生活被打破了。</p>
+            <p>鹏和火告诉他，露营活动邀请了半年前见过的好朋友“开心”！</p>
+            <div class="dialogue">“是半年前一起玩剧本杀的那个女孩吗？好安静、好漂亮，好期待一起玩！”</div>
+            <div class="thought">……兴奋的睡不着</div>
+            <div class="quote">第一次见你的我，好慌张，找不到什么话要讲。——《April Encounter》</div>
+            
+            <div class="dialogue">“露营地有好多树叶树枝呀，好好清理干净！”</div>
+            <div class="thought">……兴奋地停不下来，一切准备好了，刚好来电话了，去接开心！</div>
+            
+            <div class="dialogue">“哈哈哈，真笨，跟着走路到营地都能走丢，过去喊喊她们吧！”</div>
+            <div class="thought">……哎呀，不会和女生相处呀，蒜鸟，埋头烧烤吧。</div>
+            <div class="thought">……她也过来烧烤，离我这么近干嘛，可恶，女人你靠太近啦！</div>
+            <div class="thought">……给她烤个糊的吧！</div>
+
+            <div class="dialogue">“想吃柚子但是莫名奇妙的想给开心剥柚子，wtf，才第二次见啊，奇怪的想法入侵大脑。”</div>
+            <div class="thought">……剥柚子，给学姐吃，学姐分享给大家吃，奇怪的目的达成了~</div>
+            
+            <p>露营活动结束，感觉时间过得好快，不知道还有没有机会再见到开心呢？小狐狸躺着胡思乱想。</p>
+            <p>突然鹏和火的电话打过来了，竟然问他喜不喜欢开心？？？</p>
+            
+            <div class="dialogue">“天哪，哪有这么直接的啊，完全没有准备好怎么和一个女生相处呀，况且我和她这种性格，在一起互相都不说话她会感到很尬然后自动离开我的！”</div>
+            <div class="thought">……装傻吧，糊弄过去，过了这一天就又能回到平静的生活了，水泥封心，启动！</div>
+            <div class="thought">……平静的生活，但总感觉很烦，像少了点什么</div>
+
+            <div class="dialogue">“火火周五约了开心，到时候你去她公司接她吧，然后你俩到学校逛逛，到了七点再和火火汇合去吃饭”</div>
+            <div class="thought">……这就和开心单独待在一起了？？根本没准备好啊喂，想拒绝！</div>
+            <div class="dialogue">“那我告诉开心说你不去啦。”</div>
+            <div class="thought">……可恶啊，别、别、别、别、别、别、别、别</div>
+            <p style="text-align: center; color: var(--nick-tone); margin-top: 40px; font-weight: bold;">我怀疑，这奇遇，就是个恶作剧！</p>
+        </div>
+
+        <div class="story-card">
+            <div class="chapter-header">
+                <div class="chapter-num">Chapter 02</div>
+                <div class="chapter-name">月亮篇</div>
+            </div>
+
+            <p>小雨。可恶的天气。</p>
+            <div class="dialogue">“虽然有雨，还是骑车去吧，说不定雨停了呢？”</div>
+            <div class="thought">……全身微湿</div>
+            <div class="dialogue">“还是不要骑回学校了吧，还是晚高峰，开心坐后面还得打伞啥的，很危险，直接把车停她公司楼下，有机会再接她出来，嘿嘿，试图接近她了解她的小借口有啦”</div>
+            
+            <h3 style="text-align: center; color: var(--judy-tone); margin: 30px 0; font-family: var(--font-title); font-weight: normal;">✨ 小狐狸满眼都是开心！</h3>
+            
+            <div class="thought">……她不喜欢吃香菜、不爱吃海鲜...但是她好厉害，竟然喜欢坐欢乐谷最大的过山车，还有跳楼机！</div>
+            <div class="thought">……她吃烤肉喜欢用青菜包住烤肉，小狐狸从不吃青菜，尝试了一下后竟然感觉像是找到了新大陆</div>
+            <div class="thought">……她喜欢追剧，她涉猎真广...她本人一定很有意思呀，只是好难接近呀</div>
+            <div class="thought">……她说她好久都没喝过酒，这次竟然陪小狐狸喝了...</div>
+            <div class="thought">……她说那是她第一次坐有轨电车，芜湖！</div>
+            <div class="thought">……她说她被工作影响，脾气慢慢变差了诶...不过又莫名奇妙的想看她生气的样子，奇怪的感觉</div>
+            <div class="thought">……她打羽毛球竟然叫江哥把我往死里打...好想欺负她啊</div>
+            <div class="thought">……她唱的每一首歌都好甜啊，情歌王都被她唱成甜歌王了</div>
+            
+            <p>小狐狸想认真地对待一个女生了。</p>
+            <p>小狐狸平静的生活结束了。</p>
+
+            <div class="dialogue">“好想打开她的话匣子呀...她家住哪里？谈过恋爱吗？最想去什么地方旅行？和谁旅行……”</div>
+            <div class="thought">……不知道她喜不喜欢猫咪，准备点猫条。</div>
+            <div class="thought">……学校到底有什么好吃的？到处问问。</div>
+            <div class="thought">……尝试约约她吧，刚好车放在她公司了，嘿嘿，借口有了</div>
+            
+            <p>加班……</p>
+            <div class="thought">……不是时候呢，下次再试试吧，不过她要是能约小狐狸就好了，嗐，别异想天开啦。</div>
+            
+            <div class="dialogue">“开心的性格真的就像是世界上的另一个我，某段时间的我”小狐狸心想</div>
+            <div class="dialogue">“原来我真可恶啊，平时给人的感觉那么冷淡，但其实本意不是这样的！”</div>
+            <p>小狐狸希望确实是他想的那样。</p>
+
+            <div class="dialogue">“疯狂动物城2要上映了，不想和抠脚大汉们一起看这个啊！！！再尝试一下约开心吧”</div>
+            <div class="thought">……她会不会另有安排呢...刚认识的小狐狸怎么可能成为首选</div>
+            <div class="thought">……到底要不要约她呢，先纠结着吧~</div>
+            <div class="thought">……好时间段的票都要被抢空了啊，决定了，再尝试约她一下吧，她是“世界上另一个我”，就算不和小狐狸去，知道小狐狸约了她应该也会很开心吧</div>
+
+            <p>确实没能约上呢，不过她给的原因是和妹妹约好了</p>
+            <div class="thought">……可恶的妹妹！！！！</div>
+
+            <p>每周只有周末能约着和大家一起玩，如果某周有事，那就是半月不见</p>
+            <div class="thought">……什么时候才能打开她的话匣子啊</div>
+            <div class="thought">……一周一周过去，她好像见到小狐狸越来越尴尬了，和小狐狸最开始担心的事情一样</div>
+            <div class="thought">……她说话不敢看小狐狸，站在一起的时候也不敢多待一会儿</div>
+            <div class="thought">……这段奇遇会就这样结束了吗？</div>
+            <div class="thought">……还是说，她接触下来觉得小狐狸没意思呢？</div>
+
+            <p>小狐狸静不下来了，看着月亮发呆，叹了叹气。</p>
+            <div class="quote">“我是你房间的月亮，无聊的时候找我借光芒；闭上眼发现我晃得慌，太阳升起我还是没能忘……”</div>
+        </div>
+
+        <div class="story-card">
+            <div class="chapter-header">
+                <div class="chapter-num">Chapter 03</div>
+                <div class="chapter-name">生日篇</div>
+            </div>
+
+            <p>小狐狸还是在第一次和开心吃饭的时候得知的开心生日。</p>
+            <div class="thought">……开心是射手座，那岂不是马上就要过生日啦</div>
+            <div class="thought">……一定要给她一个最特别的生日礼物！</div>
+
+            <div class="timeline">
+                <div class="time-node">
+                    <div class="time-date">11月23日</div>
+                    <div class="time-content">给你准备疯狂动物城主题的礼物。要是能一起看就更好了。</div>
+                </div>
+                
+                <div class="time-node">
+                    <div class="time-date">11月24日</div>
+                    <div class="time-content">听错了你喜欢的明星，误选了《LovingYou》。开始苦练这首曲子。</div>
+                </div>
+
+                <div class="time-node">
+                    <div class="time-date">11月25日</div>
+                    <div class="time-content">手全是水泡，曲子好难。</div>
+                </div>
+
+                <div class="time-node">
+                    <div class="time-date">11月26日</div>
+                    <div class="time-content">大横按使不上劲。不能放弃，没有曲子就没有独一无二的礼物。</div>
+                </div>
+
+                <div class="time-node">
+                    <div class="time-date">11月27日</div>
+                    <div class="time-content">渐入佳境，不能弹顺的部分竟然能弹了！</div>
+                </div>
+
+                <div class="time-node">
+                    <div class="time-date">11月28日</div>
+                    <div class="time-content">日常练琴，时间好紧迫啊。</div>
+                </div>
+
+                <div class="time-node">
+                    <div class="time-date">11月29日</div>
+                    <div class="time-content">今天周六，想叫你出去玩...蒜鸟，躺尸吧！</div>
+                </div>
+
+                <div class="time-node">
+                    <div class="time-date">11月30日</div>
+                    <div class="time-content">好久没见，你隔了那么远跟我招手，可到身边了却不敢看我...</div>
+                </div>
+
+                <div class="time-node">
+                    <div class="time-date">12月1日</div>
+                    <div class="time-content">想到了新点子！给你一个计算机专业朋友独有的礼物！</div>
+                </div>
+
+                <div class="time-node">
+                    <div class="time-date">12月2日</div>
+                    <div class="time-content">拼豆完成了。发誓只做这一次手工！</div>
+                </div>
+
+                <div class="time-node">
+                    <div class="time-date">12月3日</div>
+                    <div class="time-content">今天阳光真好，礼物准备得差不多了。</div>
+                </div>
+
+                <div class="time-node">
+                    <div class="time-date">12月4日</div>
+                    <div class="time-content">喉咙好痛，代码还没写完。有点紧迫了。</div>
+                </div>
+
+                <div class="time-node">
+                    <div class="time-date">12月5日</div>
+                    <div class="time-content">芯片到货，程序录入成功！！</div>
+                </div>
+            </div>
+
+            <div class="birthday-card">
+                <div class="card-deco"></div>
+                <div class="card-deco-2"></div>
+                <h3 style="color: var(--nick-tone); font-family: var(--font-title); font-size: 2rem;">🎂 生日快乐呀！</h3>
+                <p style="margin-top: 20px; font-weight: bold; color: #555;">希望你读到这里哭鼻子啦！想看！<br>如果是笑着的那当然更好啦！</p>
+                <p style="font-family: var(--font-hand); color: #888; font-size: 1.2rem; margin-top: 15px;">2025年的生日能有这样一份特别的礼物，<br>你会记得多久呢？</p>
+            </div>
+        </div>
+
+        <div style="text-align: center; margin-bottom: 50px;">
+            <button class="btn-start" style="font-size: 1rem; padding: 12px 30px; background: rgba(255,255,255,0.7);" id="startQuizBtn" onclick="startQuiz()">还有几个小问题</button>
+        </div>
+
+        <div id="quiz-section"></div>
+        
+        <div style="height: 100px;"></div>
+
+    </div>
+
+    <div id="final-modal" class="modal">
+        <div class="modal-inner">
+            <div class="final-icon">🍃</div>
+            <h2 style="color: var(--nick-tone); font-family: var(--font-title); font-size: 2rem; margin-bottom: 15px;">Me Too</h2>
+            <p style="color: #999; font-family: var(--font-hand); font-size: 1.2rem;">（小狐狸的心声）</p>
+            <button class="btn-start" style="margin-top: 30px; padding: 10px 30px; font-size: 0.9rem;" onclick="document.getElementById('final-modal').classList.remove('show')">收到心意</button>
+        </div>
+    </div>
+
     <script>
-        // 页面加载完成后开始创建飘落元素并确保音乐播放
-        document.addEventListener('DOMContentLoaded', function() {
-            createFallingElements();
-            // 尝试自动播放音乐
-            const music = document.getElementById('background-music');
-            // 移除autoplay属性，改用JavaScript控制
-            music.muted = true;  // 先静音播放
-            music.play().then(() => {
-                // 成功播放后取消静音
-                music.muted = false;
-            }).catch(function(error) {
-                console.log("自动播放失败:", error);
-                // 如果自动播放失败，则需要用户交互后播放
-                setupUserInteractionForPlay();
-            });
-        });
-        
-        // 创建飘落元素
-        function createFallingElements() {
-            const container = document.getElementById('falling-elements');
-            const elements = ['🌸', '🍃', '🌼', '💐', '🌷', '🌺'];
-            const elementCount = 30;
-            
-            for (let i = 0; i < elementCount; i++) {
-                const fallingElement = document.createElement('div');
-                fallingElement.className = 'falling-element';
-                fallingElement.textContent = elements[Math.floor(Math.random() * elements.length)];
+        // --- 1. 增强版飘落粒子 (Enhanced Canvas) ---
+        const canvas = document.getElementById('falling-canvas');
+        const ctx = canvas.getContext('2d');
+        let width, height;
+        let particles = [];
+
+        function resize() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resize);
+        resize();
+
+        class Particle {
+            constructor() {
+                this.reset();
+                this.y = Math.random() * height; // 初始随机分布
+            }
+            reset() {
+                this.x = Math.random() * width;
+                this.y = -20;
+                // 大小差异化
+                this.size = Math.random() * 5 + 2; 
+                // 速度差异化
+                this.speedY = Math.random() * 1 + 0.3; 
+                this.speedX = Math.random() * 0.5 - 0.25;
+                // 透明度与闪烁
+                this.opacity = Math.random() * 0.5 + 0.1;
+                this.fadeSpeed = Math.random() * 0.01 + 0.002;
+                // 颜色：白色或淡金
+                this.color = Math.random() > 0.8 ? '255, 230, 150' : '255, 255, 255'; 
+            }
+            update() {
+                this.y += this.speedY;
+                this.x += this.speedX + Math.sin(this.y * 0.01) * 0.3; // 增加摆动感
                 
-                // 随机设置大小
-                const size = Math.random() * 20 + 15;
-                fallingElement.style.fontSize = `${size}px`;
+                // 模拟闪烁
+                this.opacity += Math.sin(Date.now() * 0.005) * 0.005;
                 
-                // 随机设置左右位置
-                const leftPos = Math.random() * 100;
-                fallingElement.style.left = `${leftPos}%`;
+                if (this.y > height + 20) this.reset();
+            }
+            draw() {
+                ctx.beginPath();
+                ctx.globalAlpha = Math.max(0, Math.min(1, this.opacity));
+                ctx.fillStyle = `rgb(${this.color})`;
+                // 绘制圆形
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
                 
-                // 随机设置动画时长
-                const duration = Math.random() * 10 + 5;
-                fallingElement.style.animationDuration = `${duration}s`;
-                
-                // 随机设置延迟时间
-                const delay = Math.random() * 5;
-                fallingElement.style.animationDelay = `${delay}s`;
-                
-                container.appendChild(fallingElement);
+                // 给部分粒子加一点光晕
+                if(this.size > 5) {
+                    ctx.beginPath();
+                    ctx.globalAlpha = this.opacity * 0.3;
+                    ctx.arc(this.x, this.y, this.size * 2, 0, Math.PI * 2);
+                    ctx.fill();
+                }
             }
         }
-        
-        // 控制音乐播放/暂停
+
+        function initParticles() {
+            particles = [];
+            // 粒子数量
+            for (let i = 0; i < 45; i++) {
+                particles.push(new Particle());
+            }
+        }
+        function animateParticles() {
+            ctx.clearRect(0, 0, width, height);
+            particles.forEach(p => { p.update(); p.draw(); });
+            requestAnimationFrame(animateParticles);
+        }
+        initParticles();
+        animateParticles();
+
+
+        // --- 2. 交互逻辑 (保持不变) ---
+        const rippleLayer = document.getElementById('ripple-layer');
+        function createRipple(x, y) {
+            const ripple = document.createElement('div');
+            ripple.classList.add('ripple');
+            ripple.style.left = x - 10 + 'px';
+            ripple.style.top = y - 10 + 'px';
+            rippleLayer.appendChild(ripple);
+            setTimeout(() => ripple.remove(), 1300);
+        }
+        document.addEventListener('click', (e) => createRipple(e.clientX, e.clientY));
+        document.addEventListener('touchstart', (e) => {
+            const t = e.touches[0];
+            createRipple(t.clientX, t.clientY);
+        }, {passive: true});
+
+        const bgm = document.getElementById('bgm');
+        const musicBtn = document.getElementById('musicBtn');
+        let isPlaying = false;
         function toggleMusic() {
-            const music = document.getElementById('background-music');
-            const button = document.getElementById('music-toggle');
-            
-            if (music.paused) {
-                music.play();
-                button.textContent = '🔊 音乐开关';
+            if (isPlaying) { bgm.pause(); musicBtn.classList.remove('playing'); } 
+            else { bgm.play(); musicBtn.classList.add('playing'); }
+            isPlaying = !isPlaying;
+        }
+
+        function startJourney() {
+            document.getElementById('cover').classList.add('hidden');
+            setTimeout(() => { document.getElementById('main-content').style.opacity = 1; }, 500);
+            bgm.play().then(() => { isPlaying = true; musicBtn.classList.add('playing'); }).catch(()=>{});
+        }
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    if(entry.target.classList.contains('story-card')) {
+                        const nodes = entry.target.querySelectorAll('.time-node');
+                        nodes.forEach((node, i) => setTimeout(() => node.classList.add('visible'), i * 150));
+                    }
+                }
+            });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.story-card').forEach(c => observer.observe(c));
+
+        const questions = [
+            { q: "1、他最喜欢的明星？", opts: ["IU", "沈腾", "迪丽热巴", "蔡徐坤"], ans: "IU" },
+            { q: "2、他喜欢吃香菜吗？", opts: ["喜欢", "不喜欢"], ans: "不喜欢" },
+            { q: "3、他喜欢的游乐项目？", opts: ["过山车", "大摆锤", "鬼屋", "碰碰车"], ans: "碰碰车" },
+            { q: "4、他的星座是什么？", opts: ["白羊座", "摩羯座", "天秤座", "天蝎座"], ans: "天秤座" },
+            { q: "5、露营那天他穿什么颜色的衣服？", opts: ["格子衬衫", "白色毛衣", "黑色毛衣", "黑色衬衫"], ans: "白色毛衣" },
+            { q: "6、KTV那天他点的歌是什么？", opts: ["有点甜", "有何不可", "恶作剧", "那些年"], ans: "恶作剧" },
+            { q: "7、背景音乐歌名是什么？", opts: ["LovingYou"], ans: "LovingYou", type: "final" }
+        ];
+        let qIndex = 0;
+        function startQuiz() {
+            document.getElementById('startQuizBtn').style.display = 'none';
+            document.getElementById('quiz-section').style.display = 'block';
+            showQuestion();
+        }
+        function showQuestion() {
+            const section = document.getElementById('quiz-section');
+            const data = questions[qIndex];
+            const card = document.createElement('div');
+            card.className = 'quiz-card';
+            let html = `<div style="font-size:1.1rem;margin-bottom:20px;color:#555;font-weight:bold;">${data.q}</div>`;
+            if(data.type === 'final') {
+                html += `<button class="option-btn" style="background:linear-gradient(90deg, #ff9a9e, #fad0c4);color:white;" onclick="showFinal()">🎁 ${data.opts[0]}</button>`;
             } else {
-                music.pause();
-                button.textContent = '🔇 音乐开关';
+                data.opts.forEach(opt => { html += `<button class="option-btn" onclick="check(this,'${opt}','${data.ans}')">${opt}</button>`; });
+            }
+            card.innerHTML = html;
+            section.innerHTML = '';
+            section.appendChild(card);
+        }
+        function check(btn, val, ans) {
+            const allBtns = btn.parentElement.querySelectorAll('button');
+            allBtns.forEach(b => b.disabled = true);
+            if(val === ans) {
+                btn.classList.add('correct');
+                setTimeout(() => { if(qIndex < questions.length-1) { qIndex++; showQuestion(); } }, 600);
+            } else {
+                btn.classList.add('wrong');
+                setTimeout(() => { btn.classList.remove('wrong'); allBtns.forEach(b => b.disabled = false); }, 500);
             }
         }
-        
-        // 设置用户交互以启用音频播放
-        function setupUserInteractionForPlay() {
-            // 添加一个一次性点击事件监听器来启动音频
-            const handleClick = () => {
-                const music = document.getElementById('background-music');
-                music.muted = false;
-                music.play().catch(e => console.log("播放仍被阻止:", e));
-                document.removeEventListener('click', handleClick);
-                document.removeEventListener('touchstart', handleClick);
-            };
-            
-            document.addEventListener('click', handleClick);
-            document.addEventListener('touchstart', handleClick);
-        }
+        function showFinal() { document.getElementById('final-modal').classList.add('show'); }
     </script>
 </body>
 </html>
